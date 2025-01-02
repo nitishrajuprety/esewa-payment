@@ -24,10 +24,10 @@ jobs:
 
       - name: Publish to Packagist
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
         run: |
-          composer config --global github-oauth.github.com $GITHUB_TOKEN
+          composer config --global github-oauth.github.com $GH_TOKEN
           composer config --global token.packagist.org $PACKAGIST_TOKEN
           composer install --no-dev
           echo "Publishing package to Packagist..."
