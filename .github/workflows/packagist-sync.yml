@@ -1,0 +1,16 @@
+name: Sync with Packagist
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Packagist
+        run: curl -X POST \
+          -H "Authorization: Bearer a2e5b5844731bc0aa59a7f80699f772acdaf0d97" \
+          https://packagist.org/api/update-package?username=nitishrajuprety \
+          -d 'repository=https://github.com/nitishrajuprety/esewa-payment'
