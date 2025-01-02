@@ -31,10 +31,10 @@ jobs:
           composer config --global --auth http-basic.repo.packagist.org token $PACKAGIST_TOKEN
           composer install --no-dev
           echo "Publishing package to Packagist..."
-          curl -X POST \ 
-            -H "Authorization: Bearer $PACKAGIST_TOKEN" \ 
-            -H "Content-Type: application/json" \ 
-            -d '{"repository":{"url":"https://github.com/nitishrajuprety/esewa-payment"}}' \ 
+          curl -X POST \
+            -H "Authorization: Bearer $PACKAGIST_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"repository\":{\"url\":\"https://github.com/nitishrajuprety/esewa-payment\"}}" \
             https://packagist.org/api/update-package
 
       - name: Notify success
