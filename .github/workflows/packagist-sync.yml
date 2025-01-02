@@ -28,7 +28,7 @@ jobs:
           PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
         run: |
           composer config --global github-oauth.github.com $GH_TOKEN
-          composer config --global token.packagist.org $PACKAGIST_TOKEN
+          composer config --global --auth http-basic.repo.packagist.org token $PACKAGIST_TOKEN
           composer install --no-dev
           echo "Publishing package to Packagist..."
           curl -X POST \ 
