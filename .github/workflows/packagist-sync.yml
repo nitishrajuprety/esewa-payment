@@ -1,16 +1,42 @@
-name: Sync with Packagist
+name: Publish to Packagist
 
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 
 jobs:
-  sync:
+  publish:
+    name: Publish Package
     runs-on: ubuntu-latest
+
     steps:
-      - name: Notify Packagist
-        run: curl -X POST \
-          -H "Authorization: Bearer a2e5b5844731bc0aa59a7f80699f772acdaf0d97" \
-          https://packagist.org/api/update-package?username=nitishrajuprety \
-          -d 'repository=https://github.com/nitishrajuprety/esewa-payment'
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # Adjust to your package's minimum PHP version
+          extensions: mbstring, json, curl
+
+      - name: Validate composer.json
+        run: composer validate --no-check-publish
+
+      - name: Publish to Packagist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+        run: |
+          composer config --global github-oauth.github.com $GITHUB_TOKEN
+          composer config --global token.packagist.org $PACKAGIST_TOKEN
+          composer install --no-dev
+          echo "Publishing package to Packagist..."
+          curl -X POST \ 
+            -H "Authorization: Bearer $PACKAGIST_TOKEN" \ 
+            -H "Content-Type: application/json" \ 
+            -d '{"repository":{"url":"https://github.com/nitishrajuprety/esewa-payment"}}' \ 
+            https://packagist.org/api/update-package
+
+      - name: Notify success
+        if: success()
+        run: echo "Package successfully published to Packagist."
