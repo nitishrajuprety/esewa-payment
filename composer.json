@@ -1,8 +1,7 @@
 {
     "name": "nitishrajuprety/esewa-payment",
     "description": "Integrate E-Sewa payment gateway in any Laravel project.",
-    "version": "0.1.0",
-    "minimum-stability": "beta",
+    "minimum-stability": "stable",
     "type": "library",
     "license": "MIT",
     "authors": [
