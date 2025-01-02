@@ -8,7 +8,7 @@ class EsewaPaymentServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->singleton('esewa-payment', EsewaPayment::class);
+        $this->app->singleton('esewa-payment', fn() => $this->app->make(EsewaPayment::class));
     }
 
     public function boot(): void
