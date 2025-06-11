@@ -32,7 +32,7 @@ class EsewaPayment
         $this->product_delivery_charge = $product_delivery_charge;
         $this->signed_field_names = "total_amount,transaction_uuid,product_code";
         $this->total_amount = $this->tax_amount + $this->amount + $this->product_delivery_charge + $this->product_service_charge;
-        $this->secret_key = Config::get('esewa.esewa_secret_key');
+        $this->secret_key = Config::get('esewa-payment.esewa_secret_key');
         $this->transaction_uuid = $transaction_id;
         $this->signature = $this->generateHmacSignature($this->total_amount, $this->transaction_uuid, $this->product_code, $this->secret_key);
     }
@@ -54,7 +54,7 @@ class EsewaPayment
             "transaction_uuid" => $this->transaction_uuid
         ];
 
-        $url = Config::get('esewa.esewa_epay_base_url');
+        $url = Config::get('esewa-payment.esewa_epay_base_url');
 
         echo "<form id='esewaForm' action='$url' method='post'>";
         foreach ($postData as $key => $value) {
@@ -80,7 +80,7 @@ class EsewaPayment
             "transaction_uuid" => $this->transaction_uuid
         ];
 
-        $url = Config::get('esewa.esewa_epay_base_url');
+        $url = Config::get('esewa-payment.esewa_epay_base_url');
 
         $formHtml = "<form id='esewaForm' action='$url' method='post'>";
         foreach ($postData as $key => $value) {
@@ -104,7 +104,7 @@ class EsewaPayment
 
     public function validate(string $total_amount, string $transaction_uuid, string $product_code, bool $production = false): array
     {
-        $url = Config::get('esewa.esewa_epay_verify_url');
+        $url = Config::get('esewa-payment.esewa_epay_verify_url');
 
         $params = http_build_query([
             'product_code' => $product_code,

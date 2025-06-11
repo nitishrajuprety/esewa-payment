@@ -18,7 +18,7 @@
     },
     "require": {
         "php": "^8.2",
-        "illuminate/support": "^11.36",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
         "ext-curl": "*"
     },
     "extra": {
